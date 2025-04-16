@@ -7,8 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/DjonatanS/go-distribuited-data-system/core"
-	"github.com/DjonatanS/go-distribuited-data-system/launcher"
+	"github.com/DjonatanS/go-distributed-data-system/core"
+	"github.com/DjonatanS/go-distributed-data-system/launcher"
 )
 
 func main() {

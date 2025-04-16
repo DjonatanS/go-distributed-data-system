@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/DjonatanS/go-distribuited-data-system/core"
+	"github.com/DjonatanS/go-distributed-data-system/core"
 )
 
 type ClusterConfig struct {

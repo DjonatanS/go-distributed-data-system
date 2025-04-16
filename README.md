@@ -35,8 +35,8 @@ The system uses gRPC for communication between nodes and provides a REST API to 
 
 ```bash
 # Clone the repository
-git clone https://github.com/DjonatanS/go-distribuited-data-system.git
-cd go-distribuited-data-system
+git clone https://github.com/DjonatanS/go-distributed-data-system.git
+cd go-distributed-data-system
 
 # Install dependencies
 go mod tidy

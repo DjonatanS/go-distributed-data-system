@@ -1,4 +1,4 @@
-module github.com/DjonatanS/go-distribuited-data-system
+module github.com/DjonatanS/go-distributed-data-system
 
 go 1.23.2
 
