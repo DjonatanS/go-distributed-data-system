@@ -44,50 +44,55 @@ go mod tidy
 
 ## Usage
 
-The system can be started in master, worker, or cluster mode:
+O arquivo principal agora está em `cmd/server/main.go` e o exemplo de cluster/demo está em `example/cluster_demo/main.go`.
 
 ### Start the Master Node
 
 ```bash
-# Using flag-based arguments
-go run main.go -type=master
+# Usando argumentos por flag
+go run cmd/server/main.go -type=master
 
-# For backward compatibility
-go run main.go master
+# Para compatibilidade antiga (se aplicável)
+go run cmd/server/main.go master
 ```
 
-This will start:
-- A gRPC server on port 50051 for worker connections
-- A REST API on port 9092 for task submission
+Isso irá iniciar:
+- Um servidor gRPC na porta 50051 para conexões de workers
+- Uma API REST na porta 9092 para submissão de tarefas
 
 ### Start a Worker Node
 
 ```bash
-# Using new flag-based arguments with custom ID
-go run main.go -type=worker -id=worker1 -master=localhost:50051
+# Usando argumentos por flag com ID customizado
+go run cmd/server/main.go -type=worker -id=worker1 -master=localhost:50051
 
-# For backward compatibility
-go run main.go worker
+# Para compatibilidade antiga (se aplicável)
+go run cmd/server/main.go worker
 ```
-
-This will start a worker that connects to the specified master node.
 
 ### Start a Complete Cluster (Both Master and Workers)
 
 ```bash
-# Start a master and 3 workers (default)
-go run main.go -type=cluster
+# Inicia um master e 3 workers (padrão)
+go run cmd/server/main.go -type=cluster
 
-# Start a master with 5 workers
-go run main.go -type=cluster -workers=5
+# Inicia um master com 5 workers
+go run cmd/server/main.go -type=cluster -workers=5
+```
+
+### Exemplo de Demonstração Automática
+
+Execute o exemplo de cluster/demo, que inicia o cluster e envia tarefas automaticamente:
+
+```bash
+go run example/cluster_demo/main.go
 ```
 
 ### Submit Tasks
 
-You can submit tasks to the master node using the REST API:
+Você pode submeter tarefas para o master usando a API REST:
 
 ```bash
-# Submit a command to be executed by workers
 curl -X POST http://localhost:9092/tasks \
   -H "Content-Type: application/json" \
   -d '{"cmd":"echo hello world"}'
@@ -133,20 +138,26 @@ service NodeService {
 
 ```
 .
+├── cmd/
+│   └── server/
+│       └── main.go         # Entry point principal (CLI)
 ├── core/
-│   ├── node.go           # Master node and service implementations
-│   ├── node.pb.go        # Generated protobuf message definitions
-│   ├── node_grpc.pb.go   # Generated gRPC service definitions
-│   ├── node.proto        # Protocol buffer definitions
-│   ├── worker_node.go    # Worker node implementation
-│   ├── node_test.go      # Unit tests for the master node
+│   ├── node.go             # Master node and service implementations
+│   ├── node.pb.go          # Generated protobuf message definitions
+│   ├── node_grpc.pb.go     # Generated gRPC service definitions
+│   ├── node.proto          # Protocol buffer definitions
+│   ├── worker_node.go      # Worker node implementation
+│   ├── node_test.go        # Unit tests for the master node
 │   └── worker_node_test.go # Unit tests for the worker node
+├── example/
+│   └── cluster_demo/
+│       └── main.go         # Exemplo de uso programático do cluster
 ├── launcher/
-│   ├── launcher.go       # Package to start both master and workers together
-│   └── launcher_test.go  # Tests for the launcher package
+│   ├── launcher.go         # Package to start both master and workers together
+│   └── launcher_test.go    # Tests for the launcher package
 ├── go.mod
 ├── go.sum
-└── main.go               # Entry point with CLI interface
+└── README.md
 ```
 
 ## Technical Details
